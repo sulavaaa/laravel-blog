@@ -22,8 +22,12 @@ class PagesController extends Controller
     }
 
     public function services(){
-        $title = 'Hello Services!';
-        return view('pages.services')->with('title',$title);
+        // Passing multiple values example
+        $data = array(
+            'title'=> "Hello Services!",
+            'services' => ['Web Design', 'Programming','SEO']
+        );
+        return view('pages.services')->with($data);
     }
 
 }
