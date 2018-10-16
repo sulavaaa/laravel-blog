@@ -25,6 +25,7 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
+
 // Route::get('/About', function () {
 //     return view('pages.about');
 // });
@@ -34,5 +35,4 @@ Route::get('/services', 'PagesController@services');
 // php artisan make:controller PagesController to create contorller
 
 
-
-
+route::resource('posts','PostsController');
