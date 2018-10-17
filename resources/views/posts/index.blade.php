@@ -9,7 +9,13 @@
                     <!--<a href="/posts/{{$post->id}}">{{$post->title}}</a>-->
                     <a href="{{route('posts.show', $post->id)}}">{{$post->title}}</a>
                 </h3>
-                <small>Written on {{$post->created_at}}</small>
+                
+                <!--Normal date format-->
+                <!--<small>Written on {{$post->created_at}}</small>-->
+                
+                <!--Changed date format-->
+                <small>Written on {{ \Carbon\Carbon::parse($post->created_at)->format('d/m/Y')}}</small>
+                
             </div>
         
         @endforeach

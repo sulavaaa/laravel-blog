@@ -153,6 +153,11 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         /*
+        * add WYCIWYG editor 
+        */
+        Unisharp\Ckeditor\ServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
