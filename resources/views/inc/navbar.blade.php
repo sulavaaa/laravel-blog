@@ -13,6 +13,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/services">Services</a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link" href="/posts">Blog</a>
         </li>    
         </ul>
     </div>  
