@@ -129,6 +129,14 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
+        
+        // Implement toastr 
+        // $notification = array(
+        //     'message' => 'Post deleted Successfully!', 
+        //     'alert-type' => 'success'
+        // );
+        
+        //return Redirect::to('/posts')->with($notification);
         return redirect('/posts')->with('success', 'Post Removed');
     }
 }
