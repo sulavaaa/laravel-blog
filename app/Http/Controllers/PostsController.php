@@ -59,6 +59,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id= auth()->user()->id;
         $post->save();
 
         //return redirect('/posts')->with('success', 'Post Created');
@@ -137,6 +138,7 @@ class PostsController extends Controller
         // );
         
         //return Redirect::to('/posts')->with($notification);
+        //return Route::redirect('/posts')->with('success','Post Removed');
         return redirect('/posts')->with('success', 'Post Removed');
     }
 }
