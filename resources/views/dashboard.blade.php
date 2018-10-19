@@ -32,6 +32,7 @@
                                         {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right','onsubmit' => 'return confirmDelete()'])!!}
                                             {{Form::hidden('_method', 'DELETE')}}
                                             {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                                            {{ csrf_field() }}
                                         {!!Form::close()!!}
                                     </td>
                                 </tr>

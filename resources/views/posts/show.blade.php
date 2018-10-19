@@ -11,7 +11,7 @@
     <hr>
     <small>Written at: {{$post->created_at}} by {{$post->user->name}}</small>
     <hr>
-    @if(!Auth::guest())
+    @auth
         @if(Auth::user()->id == $post->user_id)
             <a href="{{ route('posts.edit', $post->id) }}"  class="btn btn-info">Edit</a>
 
@@ -21,7 +21,7 @@
                         {{ csrf_field() }}
             {!!Form::close()!!}
         @endif
-    @endif
+    @endauth
 @endsection
 <script> function confirmDelete() { var result = confirm('Are you sure you want to delete?'); if (result) { return true; } else { return false; } } </script>
 

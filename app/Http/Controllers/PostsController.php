@@ -88,7 +88,7 @@ class PostsController extends Controller
         //return Post::find($id);
         //return view();
 
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         return view('posts.show')->with('post', $post);
         
     }

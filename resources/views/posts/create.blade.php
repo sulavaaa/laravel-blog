@@ -14,5 +14,6 @@
             {{Form::textarea('body', '', ['id'=> 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Add text'])}}
         </div>
         {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+        {{ csrf_field() }}
     {!! Form::close() !!}
 @endsection
