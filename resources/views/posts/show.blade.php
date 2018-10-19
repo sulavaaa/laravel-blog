@@ -5,6 +5,7 @@
         <a href="{{ route('posts.index') }}" class="btn btn-success">Back to posts</a>
     </div>
     <h1>{{$post->title}}</h1>
+    <img style="width:100%" src="/storage/cover_images/{{$post->cover_image}}">
     <div>
         {!!$post->body!!}
     </div>

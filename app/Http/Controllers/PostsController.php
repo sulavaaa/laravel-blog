@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Storage;
 //use DB;
 class PostsController extends Controller
 {
@@ -63,14 +64,41 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'  
+            'body' => 'required', 
+            'cover_image' => 'image|nullable|max:1999'
+
         ]);
+
+        // File upload handling 
+        /**
+         * Delete the old image if the image was updated.
+         * also the noimage.jpg file won't get deleted in case the user creates a post without an image
+         * and then decides to edit it by adding one.
+         * 
+         */
+        if($request->hasFile('cover_image')){ 
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('cover_image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+        } 
+        else {
+            $fileNameToStore = 'noimage.jpg';
+        }
         
         // Create Post
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
-        $post->user_id= auth()->user()->id;
+        $post->user_id = auth()->user()->id;
+        $post->cover_image = $fileNameToStore;
         $post->save();
 
         //return redirect('/posts')->with('success', 'Post Created');
@@ -120,7 +148,8 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'  
+            'body' => 'required', 
+            'cover_image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:1999'
         ]);
         
         // Create Post
@@ -128,6 +157,37 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->save();
+        
+        // File upload handling 
+        /**
+         * Delete the old image if the image was updated.
+         * also the noimage.jpg file won't get deleted in case the user creates a post without an image
+         * and then decides to edit it by adding one.
+         * 
+         */
+        if($request->hasFile('cover_image')){ 
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('cover_image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+
+            if ($post->cover_image != 'noimage.jpg') { 
+                Storage::delete('public/cover_images/'.$post->cover_image); 
+            } 
+            $post->cover_image = $fileNameToStore;
+            // Upload Image
+            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+            
+        } 
+        else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+            
 
         //return redirect('/posts')->with('success', 'Post Created');
         return redirect()->route('posts.show', ['post' => $post->id])->with('success', 'Post Updated!');
