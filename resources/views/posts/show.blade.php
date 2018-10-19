@@ -11,13 +11,17 @@
     <hr>
     <small>Written at: {{$post->created_at}} by {{$post->user->name}}</small>
     <hr>
-    <a href="{{ route('posts.edit', $post->id) }}"  class="btn btn-info">Edit</a>
+    @if(!Auth::guest())
+        @if(Auth::user()->id == $post->user_id)
+            <a href="{{ route('posts.edit', $post->id) }}"  class="btn btn-info">Edit</a>
 
-    {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right','onsubmit' => 'return confirmDelete()'])!!}
-                {{Form::hidden('_method', 'DELETE')}}
-                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-                {{ csrf_field() }}
-    {!!Form::close()!!}
+            {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right','onsubmit' => 'return confirmDelete()'])!!}
+                        {{Form::hidden('_method', 'DELETE')}}
+                        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                        {{ csrf_field() }}
+            {!!Form::close()!!}
+        @endif
+    @endif
 @endsection
 <script> function confirmDelete() { var result = confirm('Are you sure you want to delete?'); if (result) { return true; } else { return false; } } </script>
 
