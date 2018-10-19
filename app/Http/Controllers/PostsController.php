@@ -26,6 +26,7 @@ class PostsController extends Controller
         //$posts = Post:: orderBy('created_at', 'desc')->get();
 
         // With Pagination -> add {{$posts->links()}} in your index.blade.php too
+
         $posts = Post:: orderBy('created_at', 'desc')->paginate(3);
         
         return view('posts.index')->with('posts',$posts);

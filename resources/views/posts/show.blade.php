@@ -2,20 +2,22 @@
 
 @section('content') 
     <div class="float-right">
-        <a href="/posts" class="btn btn-success">Back to posts</a>
+        <a href="{{ route('posts.index') }}" class="btn btn-success">Back to posts</a>
     </div>
     <h1>{{$post->title}}</h1>
     <div>
         {!!$post->body!!}
     </div>
     <hr>
-    <small>Written at: {{$post->created_at}}</small>
+    <small>Written at: {{$post->created_at}} by {{$post->user->name}}</small>
     <hr>
-    <a href="/posts/{{$post->id}}/edit" class="btn btn-info">Edit</a>
+    <a href="{{ route('posts.edit', $post->id) }}"  class="btn btn-info">Edit</a>
 
     {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'float-right','onsubmit' => 'return confirmDelete()'])!!}
                 {{Form::hidden('_method', 'DELETE')}}
                 {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                {{ csrf_field() }}
     {!!Form::close()!!}
 @endsection
-<script> function confirmDelete() { var result = confirm('Are you sure you want to delete?'); if (result) { return true; } else { return false; } } </script>﻿
+<script> function confirmDelete() { var result = confirm('Are you sure you want to delete?'); if (result) { return true; } else { return false; } } </script>
+
